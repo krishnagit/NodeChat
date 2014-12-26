@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>chat using Socket.io</title>
+<style>
+/*
+
+#chatwrap
+{
+float:left;
+border:1px #000 solid;
+}*/
+</style>
+<link href="master.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<div class="head">
+
+<h1>Group Chat /Private Chat</h1>
+
+</div>
+<div class="leftContent">
+<div id="users">
+</div>
+</div>
+<div class="rightContent">
+<div id="nickWrap">
+<p class="usrlbl">Enter a username:</p>
+<p id="nickError"></p>
+<form id="setNick">
+<input size="35" id="nickname"></input>
+<input type="submit"></input>
+</form>
+</div>
+<div id="contentWrap">
+<div id="chatWrap">
+<div id="chat"></div>
+<form id="send-message" >
+<input size="35" id="message"></input>
+<input type="submit"></input>
+</form>
+<form id="send-message" action="/Fileupload" method="post">
+<input type="submit" value="Upload File" name="submit"></input>
+</form>
+</div>
+
+</div>
+</div>
+<div class="clear"></div>
+<div class="footer"></div>
+</div>
+
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="script/app1.js"></script>
+<script>
+jQuery(function($)
+		{
+	var socket = io.connect();
+	var $nickForm = $('#setNick');
+	var $nickError = $('#nickError');
+	var $nickBox = $('#nickname');
+	var $users =$('#users');
+	var $messageForm  = $('#send-message');
+	var $messageBox = $('#message');
+	var $chat = $('#chat');
+	var current;
+
+	$nickForm.submit(function(e){
+		e.preventDefault();
+		socket.emit('new user', $nickBox.val(), function(data)
+			{
+			if (data){
+				$('#nickWrap').hide();
+				$('#contentWrap').show();
+			}
+			else
+			{
+				nickError.html('The username is already Taken');
+			}});
+		current = $nickBox.val();
+			$nickBox.val('');
+	});
+	
+	socket.on('usernames', function(data){
+		var html = '';
+		for(i=0; i<data.length; i++){
+			html += '<div class="vuser">' + data[i] + '</div>'
+		}
+//		html +='</div>';
+		$users.html(html);
+	});
+	
+	$messageForm.submit(function(e){
+		
+		e.preventDefault();
+		socket.emit('send message', $messageBox.val());
+		$messageBox.val('');
+	});
+		socket.on('send message', function(data){
+			io.sockets.emit('new message', data);
+		
+	});
+	socket.on('new message', function(data){
+if (current == data.nick){
+
+		$chat.append('<div class="chatmsg"><b>' + data.nick + ': </b>' + data.msg + "<br/></div>");
+}
+else
+	{
+	$chat.append('<div class="chatmsgs"><b>' + data.nick + ': </b>' + data.msg + "<br/></div>");
+	}
+
+	});
+	});
+</script>
+<script type="text/javascript">
+//var socket = io.connect();
+//var uploader = new SocketIOFileUpload(socket);
+//uploader.listenOnInput(document.getElementById("siofu_input"));
+</script>
+
+</body>
+
+</html>

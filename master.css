@@ -1,0 +1,101 @@
+*{
+	margin:0;
+	padding:0;
+}	
+body
+{
+background: #000;
+font-family:verdana;
+}
+
+.container{
+	background: #fff;
+
+	width:1024px;
+	margin:0 auto;
+}
+.head,.footer
+{
+	background: #B0BC2F;
+	height:100px;
+}
+.footer{
+	height:20px;
+}
+.leftContent
+{
+	background:#95A300;
+	height:600px;
+	float:left;
+	width:20%;
+}
+.rightContent
+{
+	background:#f1fD72;
+	height:600px;
+	float:right;
+	width:80%;
+}
+.clear
+{
+	clear:both;
+}
+
+.chatmsg{
+	padding:10px;
+	border-bottom: 1px solid lightgrey;
+	color:green;
+	
+	
+}
+.chatmsgs{
+	padding:10px;
+	border-bottom: 1px solid lightgrey;
+	color:red;
+	
+}
+
+.vuser{
+	background:green;
+	margin-bottom:5px;
+	color:#fff;
+	padding:10px;
+}
+
+#contentWrap{
+display:none;
+}
+
+#chat{
+height : 500px;
+}
+
+#message,#nickname{
+	border:1px solid #95A300;
+	line-height:40px;
+	height:40px;
+	width :70%;
+	margin-left:10px;
+	padding:0 10px;
+}
+
+input[type="submit"]{
+	height:40px;
+	padding:0 20px;
+	margin-left:10px;
+	margin-bottom:10px;
+	background:#95A300;
+	border:1px solid #95A300;
+	color:#000;
+}
+
+.usrlbl{
+	margin-left:10px;
+	margin-bottom:10px;
+	padding-top:10px;
+}
+
+h1{
+	color:#fff;
+	padding-left:10px;
+}
